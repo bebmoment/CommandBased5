@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeSubsystem extends SubsystemBase {
     
     private final CANSparkMax intake = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
-
+    
     private final DoubleSolenoid intakePneumatic = new DoubleSolenoid(PneumaticsConstants.PCM,
       PneumaticsModuleType.CTREPCM, IntakeConstants.INTAKE_FORWARD_PORT, IntakeConstants.INTAKE_REVERSE_PORT);
     
