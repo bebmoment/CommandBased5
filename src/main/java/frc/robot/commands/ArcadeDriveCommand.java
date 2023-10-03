@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import java.util.function.Supplier;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
@@ -8,9 +8,9 @@ import frc.robot.subsystems.DriveSubsystem;
 public class ArcadeDriveCommand extends CommandBase {
     
     private final DriveSubsystem driveSubsystem;
-    private final Supplier<Double> speedFunction, turnFunction;
+    private final DoubleSupplier speedFunction, turnFunction;
 
-    public ArcadeDriveCommand(DriveSubsystem driveSubsystem, Supplier<Double> speedFunction, Supplier<Double> turnFunction) {
+    public ArcadeDriveCommand(DriveSubsystem driveSubsystem, DoubleSupplier speedFunction, DoubleSupplier turnFunction) {
         this.driveSubsystem = driveSubsystem;
         this.speedFunction = speedFunction;
         this.turnFunction = turnFunction;
@@ -24,16 +24,20 @@ public class ArcadeDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double realTimeSpeed = speedFunction.get();
-        double realTimeTurn = turnFunction.get();
-
-        double left = realTimeSpeed + realTimeTurn;
-        double right = realTimeSpeed - realTimeTurn;
-        driveSubsystem.setMotors(left, right);
+        double forwardSpeed = speedFunction.getAsDouble();
+        double turnSpeed = turnFunction.getAsDouble();
+        if (forwardSpeed > 0.7) {
+            forwardSpeed = 0.7;
+        }
+        if (turnSpeed > 0.8) {
+            turnSpeed = 0.7;
+        }
+        driveSubsystem.setMotors(forwardSpeed, turnSpeed);
     }
 
     @Override 
     public void end(boolean interrupted) {
+
         System.out.println("Arcade no longer driving");
     }
 
