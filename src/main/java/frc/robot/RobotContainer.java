@@ -33,7 +33,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    
+
 
   }
 
