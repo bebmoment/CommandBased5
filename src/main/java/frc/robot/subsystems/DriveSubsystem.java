@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 // import com.kauailabs.navx.frc.AHRS;
 
@@ -25,8 +22,8 @@ public class DriveSubsystem extends SubsystemBase {
   // private final Timer timer = new Timer();
 
   private final WPI_VictorSPX driveFrontLeft = new WPI_VictorSPX(DriveConstants.DRIVE_FRONT_LEFT);
-  private final WPI_TalonSRX driveFrontRight = new WPI_TalonSRX(DriveConstants.DRIVE_FRONT_RIGHT);
-  private final CANSparkMax driveBackLeft = new CANSparkMax(DriveConstants.DRIVE_BACK_LEFT, MotorType.kBrushed);
+  private final WPI_VictorSPX driveFrontRight = new WPI_VictorSPX(DriveConstants.DRIVE_FRONT_RIGHT);
+  private final WPI_VictorSPX driveBackLeft = new WPI_VictorSPX(DriveConstants.DRIVE_BACK_LEFT);
   private final WPI_VictorSPX driveBackRight = new WPI_VictorSPX(DriveConstants.DRIVE_BACK_RIGHT);
 
   private final MotorControllerGroup driveLeft = new MotorControllerGroup(driveFrontLeft, driveBackLeft);
@@ -38,7 +35,7 @@ public class DriveSubsystem extends SubsystemBase {
     driveFrontLeft.setNeutralMode(NeutralMode.Brake);
     driveFrontRight.setNeutralMode(NeutralMode.Brake);
     driveBackRight.setNeutralMode(NeutralMode.Brake);
-    driveBackLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    driveBackLeft.setNeutralMode(NeutralMode.Brake);
     driveRight.setInverted(true);
   }
 

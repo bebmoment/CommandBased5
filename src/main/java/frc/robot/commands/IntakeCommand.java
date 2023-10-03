@@ -30,7 +30,26 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
 
-    
+    if(speed.getAsDouble() < 0.0){
+
+      m_intakeSubsystem.setMotor(speed.getAsDouble());
+      m_intakeSubsystem.setStall(true);
+    }
+
+    else if(speed.getAsDouble() > 0.0){
+      m_intakeSubsystem.setMotor(speed.getAsDouble());
+      m_intakeSubsystem.setStall(false);
+    }
+
+    else if(speed.getAsDouble() == 0.0){
+
+      if(m_intakeSubsystem.getStall() /* && IntakeConstants.stallAfterIntake */){
+        m_intakeSubsystem.setMotor(IntakeConstants.INTAKE_STALL_SPEED);
+      }
+      else{
+        m_intakeSubsystem.setMotor(speed.getAsDouble());
+      }
+    }
 
   }
 

@@ -29,8 +29,9 @@ public final class Constants {
   public static class IntakeConstants {
     
     public static final int INTAKE_MOTOR_ID = 5;
-    public static final int INTAKE_FORWARD_PORT = 2;
-    public static final int INTAKE_REVERSE_PORT = 3;
+    
+    public static final double INTAKE_SPEED = 0.4;
+    public static final double INTAKE_STALL_SPEED = 0.2;
     
   }
 
