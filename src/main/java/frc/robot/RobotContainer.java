@@ -7,9 +7,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -32,6 +38,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    driveSubsystem.setDefaultCommand(
+      new ArcadeDriveCommand(driveSubsystem,
+                      () -> -driverController.getRawAxis(DriveConstants.DRIVE_AXIS),
+                      (() -> -driverController.getRawAxis(DriveConstants.TURN_AXIS) * DriveConstants.TURN_PROPORTION)));
 
 
 
@@ -48,10 +58,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    new JoystickButton(operatorController, ControllerConstants.INTAKE_BUTTON).whileTrue(new IntakeCommand(intakeSubsystem, () -> IntakeConstants.INTAKE_SPEED));
+    new JoystickButton(operatorController, ControllerConstants.OUTTAKE_BUTTON).whileTrue(new IntakeCommand(intakeSubsystem, () -> -IntakeConstants.INTAKE_SPEED));
 
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
 
   }
 
@@ -62,6 +71,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return chooser.getSelected();
+    return new ParallelCommandGroup(new ArcadeDriveCommand(driveSubsystem, () -> 0.5, () -> 0.0), new IntakeCommand(intakeSubsystem, () -> IntakeConstants.INTAKE_SPEED));
+
+    
   }
 }

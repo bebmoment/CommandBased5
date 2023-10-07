@@ -5,16 +5,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.subsystems.Stopwatch;
+/*
+ * The one-use command to go with the one-use system Stopwatch.java
+ */
 public class Delay extends CommandBase {
+
+  private double delaySeconds;
+  private Stopwatch stopwatch;
+
   /** Creates a new Delay. */
-  public Delay() {
+  public Delay(double delaySeconds, Stopwatch stopwatch) {
+    
+    this.delaySeconds = delaySeconds;
+    this.stopwatch = stopwatch;
+
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(stopwatch);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    stopwatch.resetTimer();
+    stopwatch.startTimer();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -27,6 +42,6 @@ public class Delay extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return stopwatch.getTimer() > delaySeconds;
   }
 }
