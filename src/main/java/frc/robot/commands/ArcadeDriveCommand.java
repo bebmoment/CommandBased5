@@ -31,7 +31,7 @@ public class ArcadeDriveCommand extends CommandBase {
 
     @Override 
     public void end(boolean interrupted) {
-
+        this.driveSubsystem.setMotors(0,0);
         System.out.println("Arcade no longer driving");
     }
 
