@@ -18,7 +18,6 @@ import frc.robot.commands.Autonomous;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Stopwatch;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,7 +29,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();  
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final Stopwatch timer = new Stopwatch();
 
   private final Joystick driverController = new Joystick(ControllerConstants.DRIVER_PORT);
   private final Joystick operatorController = new Joystick(ControllerConstants.OPERATOR_PORT);
@@ -41,8 +39,10 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     driveSubsystem.setDefaultCommand(
-      new ArcadeDriveCommand(driveSubsystem, () -> -driverController.getRawAxis(DriveConstants.DRIVE_AXIS) * DriveConstants.DRIVE_PROPORTION, (() -> -driverController.getRawAxis(DriveConstants.TURN_AXIS) * DriveConstants.TURN_PROPORTION)));
-    chooser.setDefaultOption("Autonomous", new Autonomous(driveSubsystem, intakeSubsystem, timer));
+      new ArcadeDriveCommand(driveSubsystem, 
+      () -> -driverController.getRawAxis(DriveConstants.DRIVE_AXIS) * DriveConstants.DRIVE_PROPORTION, 
+      (() -> -driverController.getRawAxis(DriveConstants.TURN_AXIS) * DriveConstants.TURN_PROPORTION)));
+    chooser.setDefaultOption("Autonomous", new Autonomous(driveSubsystem, intakeSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeCommand(intakeSubsystem, () -> 0.0));
 
 

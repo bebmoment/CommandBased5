@@ -9,18 +9,16 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Stopwatch;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Autonomous extends ParallelCommandGroup {
   /** Creates a new Autonomous. */
-  public Autonomous(DriveSubsystem driveSubsystem, IntakeSubsystem intakeSubsytem, Stopwatch timer) {
+  public Autonomous(DriveSubsystem driveSubsystem, IntakeSubsystem intakeSubsytem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArcadeDriveCommand(driveSubsystem, () -> AutoConstants.AUTO_DRIVE_SPEED, () -> AutoConstants.AUTO_TURN_SPEED), 
-    new IntakeCommand(intakeSubsytem, () -> IntakeConstants.INTAKE_SPEED),
-    new Delay(AutoConstants.DELAY_SECONDS, timer));
+    addCommands(new ArcadeDriveCommand(driveSubsystem, () -> AutoConstants.AUTO_DRIVE_SPEED, () -> AutoConstants.AUTO_TURN_SPEED).withTimeout(AutoConstants.DELAY_SECONDS), 
+    new IntakeCommand(intakeSubsytem, () -> IntakeConstants.INTAKE_SPEED).withTimeout(AutoConstants.DELAY_SECONDS));
   }
 }
