@@ -43,7 +43,7 @@ public class IntakeCommand extends CommandBase {
 
     else if(speed.getAsDouble() == 0.0){
 
-      if(m_intakeSubsystem.getStall() /* && IntakeConstants.stallAfterIntake */){
+      if(m_intakeSubsystem.getStall()){
         m_intakeSubsystem.setMotor(IntakeConstants.INTAKE_STALL_SPEED);
       }
       else{

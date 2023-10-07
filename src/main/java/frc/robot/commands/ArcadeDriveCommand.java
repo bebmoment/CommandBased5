@@ -26,15 +26,6 @@ public class ArcadeDriveCommand extends CommandBase {
     public void execute() {
         double forwardSpeed = speedFunction.getAsDouble();
         double turnSpeed = turnFunction.getAsDouble();
-
-        // delete and move to RobotContainer as a constant 
-        if (forwardSpeed > 0.7) {
-            forwardSpeed = 0.7;
-        }
-        if (turnSpeed > 0.8) {
-            turnSpeed = 0.7;
-        }
-        
         driveSubsystem.setMotors(forwardSpeed, turnSpeed);
     }
 

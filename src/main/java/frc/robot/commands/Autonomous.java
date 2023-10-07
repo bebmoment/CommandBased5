@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -18,8 +19,8 @@ public class Autonomous extends ParallelCommandGroup {
   public Autonomous(DriveSubsystem driveSubsystem, IntakeSubsystem intakeSubsytem, Stopwatch timer) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArcadeDriveCommand(driveSubsystem, () -> 0.5, () -> 0.0), 
+    addCommands(new ArcadeDriveCommand(driveSubsystem, () -> AutoConstants.AUTO_DRIVE_SPEED, () -> AutoConstants.AUTO_TURN_SPEED), 
     new IntakeCommand(intakeSubsytem, () -> IntakeConstants.INTAKE_SPEED),
-    new Delay(2, timer));
+    new Delay(AutoConstants.DELAY_SECONDS, timer));
   }
 }

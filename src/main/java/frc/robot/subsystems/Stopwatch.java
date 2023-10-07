@@ -10,21 +10,28 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Essentially a timer only ever used to autonomous for 2 seconds
  * 
  * CNE Bot 1 needed a way to keep track of time somewhere and so do I
- * this is sufficient
+ * this is sufficient so I'm stealing it
  */
 public class Stopwatch extends SubsystemBase {
   private final Timer timer = new Timer();
   /** Creates a new Stopwatch. */
   public Stopwatch() {}
-
+  
+  /** Resets the stopwatch */
   public void resetTimer() {
     timer.reset();
   }
 
+  /** Starts the stopwatch */
   public void startTimer() {
     timer.start();
   }
 
+  /**
+   * Return the time since start in seconds
+   * 
+   * @return time since start in seconds
+   */
   public double getTimer() {
     return timer.get();
   }

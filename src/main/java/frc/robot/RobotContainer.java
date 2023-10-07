@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -15,9 +14,11 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Stopwatch;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,6 +30,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();  
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final Stopwatch timer = new Stopwatch();
 
   private final Joystick driverController = new Joystick(ControllerConstants.DRIVER_PORT);
   private final Joystick operatorController = new Joystick(ControllerConstants.OPERATOR_PORT);
@@ -39,10 +41,9 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     driveSubsystem.setDefaultCommand(
-      new ArcadeDriveCommand(driveSubsystem,
-                      () -> -driverController.getRawAxis(DriveConstants.DRIVE_AXIS),
-                      (() -> -driverController.getRawAxis(DriveConstants.TURN_AXIS) * DriveConstants.TURN_PROPORTION)));
-
+      new ArcadeDriveCommand(driveSubsystem, () -> -driverController.getRawAxis(DriveConstants.DRIVE_AXIS) * DriveConstants.DRIVE_PROPORTION, (() -> -driverController.getRawAxis(DriveConstants.TURN_AXIS) * DriveConstants.TURN_PROPORTION)));
+    chooser.setDefaultOption("Autonomous", new Autonomous(driveSubsystem, intakeSubsystem, timer));
+    intakeSubsystem.setDefaultCommand(new IntakeCommand(intakeSubsystem, () -> 0.0));
 
 
   }
@@ -60,8 +61,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new JoystickButton(operatorController, ControllerConstants.INTAKE_BUTTON).whileTrue(new IntakeCommand(intakeSubsystem, () -> IntakeConstants.INTAKE_SPEED));
     new JoystickButton(operatorController, ControllerConstants.OUTTAKE_BUTTON).whileTrue(new IntakeCommand(intakeSubsystem, () -> -IntakeConstants.INTAKE_SPEED));
-
-
+    
   }
 
   /**
@@ -71,7 +71,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new ParallelCommandGroup(new ArcadeDriveCommand(driveSubsystem, () -> 0.5, () -> 0.0), new IntakeCommand(intakeSubsystem, () -> IntakeConstants.INTAKE_SPEED));
+    return chooser.getSelected();
 
     
   }

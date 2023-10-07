@@ -13,27 +13,13 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-  public static class DriveConstants {
-
-    public static final int DRIVE_FRONT_LEFT = 1;
-    public static final int DRIVE_FRONT_RIGHT = 2;
-    public static final int DRIVE_BACK_LEFT = 3;
-    public static final int DRIVE_BACK_RIGHT = 4;
-
-    public static final int DRIVE_AXIS = 1;
-    public static final int TURN_AXIS = 4;
-    public static final double TURN_PROPORTION = 0.8;
-
-  }
-
-  public static class IntakeConstants {
+  
+  public static class AutoConstants { 
     
-    public static final int INTAKE_MOTOR_ID = 5;
-    
-    public static final double INTAKE_SPEED = 0.4;
-    public static final double INTAKE_STALL_SPEED = 0.2;
-    
+    public static final double AUTO_TURN_SPEED = 0.0;
+    public static final double AUTO_DRIVE_SPEED = 0.5;
+    public static final double DELAY_SECONDS = 2.0;
+
   }
 
   public static class ControllerConstants {
@@ -45,5 +31,31 @@ public final class Constants {
     public static final int OUTTAKE_BUTTON = 2;
 
   }
+
+  public static class DriveConstants {
+
+    public static final int DRIVE_FRONT_LEFT = 1;
+    public static final int DRIVE_FRONT_RIGHT = 2;
+    public static final int DRIVE_BACK_LEFT = 3;
+    public static final int DRIVE_BACK_RIGHT = 4;
+
+    public static final int DRIVE_AXIS = 1;
+    public static final int TURN_AXIS = 4;
+    
+    public static final double TURN_PROPORTION = 0.8;
+    public static final double DRIVE_PROPORTION = 0.7;
+    
+  }
+
+  public static class IntakeConstants {
+    
+    public static final int INTAKE_MOTOR_ID = 5;
+    
+    public static final double INTAKE_SPEED = 0.4;
+    public static final double INTAKE_STALL_SPEED = 0.2;
+    
+  }
+
+
 
 }
